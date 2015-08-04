@@ -1,5 +1,9 @@
 package com.codeu.android.pinpals;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -22,9 +26,41 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap map) {
-        // Add a marker in Sydney, Australia, and move the camera.
-        LatLng sydney = new LatLng(-34, 151);
-        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                //makeUseOfNewLocation(location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        // Use Network location data (less battery usage, better in theory but wasn't working on emulator)
+        //String locationProvider = LocationManager.NETWORK_PROVIDER;
+        // Or, use GPS location data:
+        String locationProvider = LocationManager.GPS_PROVIDER;
+
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(locationProvider, 1000, 0, locationListener);
+
+        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+
+        // Add a marker in last known location and move the camera.
+        LatLng last = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+        map.addMarker(new MarkerOptions().position(last).title("Marker at last known location"));
+        map.moveCamera(CameraUpdateFactory.newLatLng(last));
+
     }
+
+
+
 }
