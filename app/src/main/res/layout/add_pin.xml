@@ -62,13 +62,92 @@
                     android:layout_weight=".33" />
             </LinearLayout>
         </LinearLayout>
+
     </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Games"
+            android:id="@+id/button_games"
+            android:onClick="onActivityTypeClicked"
+            android:background="@drawable/green_button"
+            android:textColor="@color/white_text"
+            android:layout_weight="0.3" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Fitness"
+            android:id="@+id/button_fitness"
+            android:onClick="onActivityTypeClicked"
+            android:background="@drawable/cyan_button"
+            android:textColor="@color/white_text"
+            android:layout_weight="0.3" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Food"
+            android:id="@+id/button_food"
+            android:onClick="onActivityTypeClicked"
+            android:background="@drawable/blue_button"
+            android:textColor="@color/white_text"
+            android:layout_weight="0.3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Social"
+            android:id="@+id/button_social"
+            android:onClick="onActivityTypeClicked"
+            android:background="@drawable/violet_button"
+            android:textColor="@color/white_text"
+            android:layout_weight="0.3" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Studying"
+            android:id="@+id/button_studying"
+            android:onClick="onActivityTypeClicked"
+            android:background="@drawable/red_button"
+            android:textColor="@color/white_text"
+            android:layout_weight="0.3" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Other"
+            android:id="@+id/button_other"
+            android:onClick="onActivityTypeClicked"
+            android:background="@drawable/orange_button"
+            android:textColor="@color/white_text"
+            android:layout_weight="0.3" />
+    </LinearLayout>
 
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></LinearLayout>
 
         <EditText
             android:layout_width="match_parent"
