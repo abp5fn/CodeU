@@ -37,6 +37,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         //how to go through query of pins and do stuff with them
         //in this case, doing stuff is putting them on the map --> creating new pins
+
+
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Pins");
         //query.whereEqualTo("date", "May 4, 2015");
         //query.whereLessThan("endTime", currentTime??); doesn't pull down pins where the activity is over
@@ -146,10 +149,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
             // Add a marker in the current location
-            map.addMarker(new MarkerOptions()
-                    .position(current_loc)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                    .title("You're here."));
+            //map.addMarker(new MarkerOptions()
+            //        .position(current_loc)
+              //      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+               //     .title("You're here."));
 
             // Center map (aka "move camera") to current location & zoom in
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 13));
