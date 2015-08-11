@@ -69,7 +69,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(final GoogleMap map) {
         // Acquire a reference to the system Location Manager
         this.map=map;
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         try {
             // Attempt to get current location for the map.
@@ -174,12 +173,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     public static void placePin(MarkerOptions options){
         map.addMarker(options);
-        ParseObject pinTemp = new ParseObject("Pins");
-        pinTemp.put("Activity", activity_type);
-        pinTemp.put("startTime", "to get from input");
-        pinTemp.put("endTime", "to get from input");
-        pinTemp.put("date", "today");
-        pinTemp.saveInBackground();
     }
 
     public void showAddPinScreen(View v) {
