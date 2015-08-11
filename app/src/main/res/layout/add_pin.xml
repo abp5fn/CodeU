@@ -20,7 +20,7 @@
                 android:layout_weight=".5">
                 <RadioButton android:id="@+id/radio_entertainment"
                     android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/entertainment"
                     android:onClick="onRadioButtonClicked"
                     android:layout_weight=".33" />
@@ -36,7 +36,7 @@
                     android:text="@string/food"
                     android:onClick="onRadioButtonClicked"
                     android:layout_weight=".33" />
-                </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
