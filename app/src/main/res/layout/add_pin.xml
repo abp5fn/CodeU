@@ -75,7 +75,7 @@
             android:layout_height="67dp"
             android:layout_weight="1"
             android:hint="@string/event_name"
-            android:id="@+id/editText"
+            android:id="@+id/editText_Event_Name"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dip"/>
 
@@ -91,8 +91,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pick_start_time"
-            android:onClick="showTimePickerDialog"
-            android:id="@+id/startButton"
+            android:onClick="showTimePickerDialogStart"
+            android:id="@+id/editText_Start_Time"
             android:layout_gravity="center_horizontal"
             android:editable="false"
             android:focusableInTouchMode="false"
@@ -102,8 +102,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pick_end_time"
-            android:id="@+id/endButton"
-            android:onClick="showTimePickerDialog"
+            android:id="@+id/editText_End_Time"
+            android:onClick="showTimePickerDialogEnd"
             android:layout_gravity="center_horizontal"
             android:editable="false"
             android:focusableInTouchMode="false"
@@ -113,7 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pick_date"
-            android:id="@+id/dateButton"
+            android:id="@+id/editText_Date"
             android:onClick="showDatePickerDialog"
             android:layout_gravity="center_horizontal"
             android:editable="false"
@@ -123,13 +123,28 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="87dp"
-            android:id="@+id/editText2"
+            android:id="@+id/editText_Description"
             android:hint="@string/event_description"
             android:textIsSelectable="false"
             android:textColor="#ff999999"
             android:editable="true"/>
     </LinearLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:onClick="addPinFragCancel"
+        android:id="@+id/button3"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:onClick="addPinFragDone"
+        android:id="@+id/button2"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>

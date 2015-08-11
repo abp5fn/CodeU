@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
+    static GoogleMap map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +33,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(final GoogleMap map) {
-
         // Acquire a reference to the system Location Manager
+        this.map=map;
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         // Define a listener that responds to location updates
@@ -77,7 +78,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onMapLongClick(LatLng clicked_point) {
                 Marker temp_marker = map.addMarker(new MarkerOptions()
                         .position(clicked_point)
-                        .title("Clicked here")
+                        .title("Clicked\nhere")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
                 createPinPalEvent(map, clicked_point);
@@ -97,7 +98,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
      * @param clicked_point
      */
     public void createPinPalEvent(GoogleMap map, LatLng clicked_point) {
-
+        Intent nextScreen = new Intent(getApplicationContext(), AddPinFragment.class);
+        startActivity(nextScreen);
 
         /* activity types:
          * 1 = entertainment
@@ -107,47 +109,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
          * 5 = studying
          * 0 = other
          */
-        int activity_type = 1;
-        MarkerOptions options;
-        switch (activity_type) {
-            case 1:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                break;
-            case 2:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
-                break;
-            case 3:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                break;
-            case 4:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-                break;
-            case 5:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                break;
-            default:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-        } // end switch
-        map.addMarker(options);
 
+        System.out.println(clicked_point.latitude + " + " + clicked_point.longitude);
+
+        AddPinFragment.setLocation(clicked_point);
+
+        //map.addMarker(options);
+    }
+
+    public static void placePin(MarkerOptions options){
+        map.addMarker(options);
     }
 
     public void showAddPinScreen(View v) {
