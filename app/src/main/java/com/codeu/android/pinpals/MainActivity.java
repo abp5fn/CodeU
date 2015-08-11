@@ -38,7 +38,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         //how to go through query of pins and do stuff with them
         //in this case, doing stuff is putting them on the map --> creating new pins
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Pins");
-        query.whereEqualTo("date", "May 4, 2015");
+        //query.whereEqualTo("date", "May 4, 2015");
         //query.whereLessThan("endTime", currentTime??); doesn't pull down pins where the activity is over
         query.findInBackground(new FindCallback<ParseObject>() {
 
@@ -48,8 +48,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 for (int i = 0; i < list.size(); i++) {
 
                     if (e == null) {
-                        Log.d("Activity: ", list.get(i).getString("Activity"));
-                        //create a pin based on activity (helper method?
+
+                        LatLng temp = new LatLng(list.get(i).getInt("Latitude"), list.get(i).getLong("Longitude"));
+
+                                map.addMarker(new MarkerOptions()
+                                        .position(temp)
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                .title("This pin exists."));
 
                     } else {
                         Log.d("Activity", "Error: " + e.getMessage());
@@ -64,86 +69,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
-
-    @Override
-    public void onMapReady(final GoogleMap map) {
-        // Acquire a reference to the system Location Manager
-        this.map=map;
-
-        try {
-            // Attempt to get current location for the map.
-
-            // Acquire a reference to the system Location Manager
-            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-            // Define a listener that responds to location updates
-            LocationListener locationListener = new LocationListener() {
-                public void onLocationChanged(Location location) {
-                    // Called when a new location is found by the network location provider.
-                    //makeUseOfNewLocation(location);
-                }
-
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-                }
-
-                public void onProviderEnabled(String provider) {
-                }
-
-                public void onProviderDisabled(String provider) {
-                }
-            };
-
-            // Use Network location data (less battery usage, better in theory but wasn't working on emulator)
-            String locationProvider = LocationManager.NETWORK_PROVIDER;
-            // Or, use GPS location data:
-            // String locationProvider = LocationManager.GPS_PROVIDER;
-
-            // Register the listener with the Location Manager to receive location updates
-            locationManager.requestLocationUpdates(locationProvider, 1000, 0, locationListener);
-
-            Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-            LatLng current_loc = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-
-
-            // Add a marker to the current location
-            map.addMarker(new MarkerOptions()
-                    .position(current_loc)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                    .title("You are here."));
-
-
-            // Center map (aka "move camera") to current location & zoom in
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 13));
-
-        } catch (Error e) {
-            // If location error, assume location to be Boston.
-            LatLng boston = new LatLng(42.3601, -71.0589);
-            map.setMyLocationEnabled(true);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(boston, 13));
-
-            final Marker boston_marker = map.addMarker(new MarkerOptions()
-                    .title("Boston")
-                    .position(boston));
-        }
-
-        GoogleMap.OnMapLongClickListener clickListener = new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng clicked_point) {
-                Marker temp_marker = map.addMarker(new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked\nhere")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-
-                createPinPalEvent(map, clicked_point);
-
-
-                temp_marker.remove();
-            }
-        };
-        map.setOnMapLongClickListener(clickListener);
-
-    }
-
 
     /**
      * Calls create activity (which adds PinPal event to database), then creates a new marker.
@@ -171,6 +96,65 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         //map.addMarker(options);
     }
 
+
+    @Override
+    public void onMapReady(final GoogleMap map) {
+        // Acquire a reference to the system Location Manager
+        this.map=map;
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                //makeUseOfNewLocation(location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        // Use Network location data (less battery usage, better in theory but wasn't working on emulator)
+        //String locationProvider = LocationManager.NETWORK_PROVIDER;
+        // Or, use GPS location data:
+        String locationProvider = LocationManager.GPS_PROVIDER;
+
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(locationProvider, 1000, 0, locationListener);
+
+        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+        LatLng current_loc = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+
+        /*
+        // Add a marker in the current location
+        map.addMarker(new MarkerOptions()
+                .position(current_loc)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                .title("You're here."));
+        */
+
+        // Center map (aka "move camera") to current location & zoom in
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 15));
+
+        GoogleMap.OnMapLongClickListener clickListener = new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng clicked_point) {
+                Marker temp_marker = map.addMarker(new MarkerOptions()
+                        .position(clicked_point)
+                        .title("Clicked\nhere")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+
+                createPinPalEvent(map, clicked_point);
+
+                temp_marker.remove();
+            }
+        };
+        map.setOnMapLongClickListener(clickListener);
+
+    }
     public static void placePin(MarkerOptions options){
         map.addMarker(options);
     }
