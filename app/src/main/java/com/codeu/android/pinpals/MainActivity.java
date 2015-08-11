@@ -49,12 +49,24 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                     if (e == null) {
 
-                        LatLng temp = new LatLng(list.get(i).getInt("Latitude"), list.get(i).getLong("Longitude"));
+                        LatLng temp = new LatLng(list.get(i).getDouble("Latitude"), list.get(i).getDouble("Longitude"));
 
-                                map.addMarker(new MarkerOptions()
-                                        .position(temp)
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                                .title("This pin exists."));
+                        String ContentString =list.get(i).getString("Description") +
+                                ".\n" + list.get(i).getString("Start_Time") + " - " + list.get(i).getString("End_Time");
+
+                        map.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                .title(list.get(i).getString("Activity")))
+                                .setSnippet(ContentString);
+
+
+
+                       // Google.maps.event.addListener(marker, 'click', function() {
+                       //     infowindow.open(map,marker);
+                       // });
+
+
 
                     } else {
                         Log.d("Activity", "Error: " + e.getMessage());
