@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:weightSum="1"
+    android:orientation="vertical"
+    android:background="#ffa6fffd">
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5">
+                <RadioButton android:id="@+id/radio_entertainment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/entertainment"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_weight=".33" />
+                <RadioButton android:id="@+id/radio_fitness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fitness"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_weight=".33" />
+                <RadioButton android:id="@+id/radio_food"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/food"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_weight=".33" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5">
+                <RadioButton android:id="@+id/radio_social"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/social"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_weight=".33" />
+                <RadioButton android:id="@+id/radio_studying"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/studying"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_weight=".33" />
+                <RadioButton android:id="@+id/radio_other"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/other"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_weight=".33" />
+            </LinearLayout>
+        </LinearLayout>
+    </RadioGroup>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_weight="1"
+            android:hint="@string/event_name"
+            android:id="@+id/editText"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dip"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_start_time"
+            android:onClick="showTimePickerDialog"
+            android:id="@+id/startButton"
+            android:layout_gravity="center_horizontal"
+            android:editable="false"
+            android:focusableInTouchMode="false"
+            android:layout_marginBottom="5dip"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_end_time"
+            android:id="@+id/endButton"
+            android:onClick="showTimePickerDialog"
+            android:layout_gravity="center_horizontal"
+            android:editable="false"
+            android:focusableInTouchMode="false"
+            android:layout_marginBottom="5dip"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_date"
+            android:id="@+id/dateButton"
+            android:onClick="showDatePickerDialog"
+            android:layout_gravity="center_horizontal"
+            android:editable="false"
+            android:focusableInTouchMode="false"
+            android:layout_marginBottom="10dip"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="87dp"
+            android:id="@+id/editText2"
+            android:hint="@string/event_description"
+            android:textIsSelectable="false"
+            android:textColor="#ff999999"
+            android:editable="true"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

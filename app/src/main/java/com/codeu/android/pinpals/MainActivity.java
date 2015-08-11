@@ -1,12 +1,13 @@
 package com.codeu.android.pinpals;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,14 +17,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
     @Override
@@ -155,6 +148,26 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         } // end switch
         map.addMarker(options);
 
+    }
+
+    public void showAddPinScreen(View v) {
+        Intent nextScreen = new Intent(getApplicationContext(), AddPinFragment.class);
+
+        /*
+        //Sending data to another Activity
+        nextScreen.putExtra("name", inputName.getText().toString());
+        nextScreen.putExtra("email", inputEmail.getText().toString());
+
+        Log.e("n", inputName.getText() + "." + inputEmail.getText());
+        */
+
+        startActivity(nextScreen);
+
+        /*
+        LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.add_pin, null);
+        setContentView(view);
+        */
     }
 
 }
