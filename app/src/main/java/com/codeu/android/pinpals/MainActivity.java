@@ -7,6 +7,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,6 +18,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
     @Override
@@ -26,6 +33,33 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //how to go through query of pins and do stuff with them
+        //in this case, doing stuff is putting them on the map --> creating new pins
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Pins");
+        query.whereEqualTo("date", "May 4, 2015");
+        //query.whereLessThan("endTime", currentTime??); doesn't pull down pins where the activity is over
+        query.findInBackground(new FindCallback<ParseObject>() {
+
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+
+                for (int i = 0; i < list.size(); i++) {
+
+                    if (e == null) {
+                        Log.d("Activity: ", list.get(i).getString("Activity"));
+                        //create a pin based on activity (helper method?
+
+                    } else {
+                        Log.d("Activity", "Error: " + e.getMessage());
+                    }
+
+                }
+            }
+
+
+        });
+
 
 
     }
@@ -147,6 +181,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
         } // end switch
         map.addMarker(options);
+
+        ParseObject pinTemp = new ParseObject("Pins");
+        pinTemp.put("Activity", activity_type);
+        pinTemp.put("startTime", "to get from input");
+        pinTemp.put("endTime", "to get from input");
+        pinTemp.put("date", "today");
+        pinTemp.saveInBackground();
 
     }
 
