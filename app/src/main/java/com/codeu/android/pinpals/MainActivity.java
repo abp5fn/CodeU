@@ -96,13 +96,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         //map.addMarker(options);
     }
 
-
     @Override
     public void onMapReady(final GoogleMap map) {
+        this.map = map;
 
         try {
             // Acquire a reference to the system Location Manager
-            this.map = map;
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
             // Define a listener that responds to location updates
@@ -141,11 +140,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     .title("You're here."));
 
             // Center map (aka "move camera") to current location & zoom in
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 15));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 13));
 
         } catch (Error e) {
 
             // If not getting current location, use Boston
+            LatLng boston = new LatLng(42.3601, -71.0589);
+            map.setMyLocationEnabled(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(boston, 13));
+
             final Marker boston_marker = map.addMarker(new MarkerOptions()
                     .title("Boston")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
@@ -169,72 +172,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         map.setOnMapLongClickListener(clickListener);
 
     }
-
-    /**
-     * Calls create activity (which adds PinPal event to database), then creates a new marker.
-     *
-     * @param map
-     * @param clicked_point
-     */
-    public void createPinPalEvent(GoogleMap map, LatLng clicked_point) {
-
-
-        /* activity types:
-         * 1 = games
-         * 2 = fitness
-         * 3 = food
-         * 4 = social
-         * 5 = studying
-         * 0 = other
-         */
-        int activity_type = 1;
-        MarkerOptions options;
-        switch (activity_type) {
-            case 1:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                break;
-            case 2:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
-                break;
-            case 3:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                break;
-            case 4:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-                break;
-            case 5:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                break;
-            default:
-                options = new MarkerOptions()
-                        .position(clicked_point)
-                        .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-        } // end switch
-
-        ParseObject pinTemp = new ParseObject("Pins");
-        pinTemp.put("Activity", 3);
-        pinTemp.put("startTime", "to get from input");
-        pinTemp.put("endTime", "to get from input");
-        pinTemp.put("date", "today");
-        pinTemp.saveInBackground();
-
-        map.addMarker(options);
 
     public static void placePin(MarkerOptions options){
         map.addMarker(options);
