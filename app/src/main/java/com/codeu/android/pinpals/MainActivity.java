@@ -7,6 +7,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,6 +18,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
     static GoogleMap map;
@@ -28,6 +35,33 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //how to go through query of pins and do stuff with them
+        //in this case, doing stuff is putting them on the map --> creating new pins
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Pins");
+        query.whereEqualTo("date", "May 4, 2015");
+        //query.whereLessThan("endTime", currentTime??); doesn't pull down pins where the activity is over
+        query.findInBackground(new FindCallback<ParseObject>() {
+
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+
+                for (int i = 0; i < list.size(); i++) {
+
+                    if (e == null) {
+                        Log.d("Activity: ", list.get(i).getString("Activity"));
+                        //create a pin based on activity (helper method?
+
+                    } else {
+                        Log.d("Activity", "Error: " + e.getMessage());
+                    }
+
+                }
+            }
+
+
+        });
+
+
 
     }
 
@@ -37,41 +71,61 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         this.map=map;
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        // Define a listener that responds to location updates
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-                //makeUseOfNewLocation(location);
-            }
+        try {
+            // Attempt to get current location for the map.
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            // Acquire a reference to the system Location Manager
+            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-            public void onProviderEnabled(String provider) {}
+            // Define a listener that responds to location updates
+            LocationListener locationListener = new LocationListener() {
+                public void onLocationChanged(Location location) {
+                    // Called when a new location is found by the network location provider.
+                    //makeUseOfNewLocation(location);
+                }
 
-            public void onProviderDisabled(String provider) {}
-        };
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
 
-        // Use Network location data (less battery usage, better in theory but wasn't working on emulator)
-        //String locationProvider = LocationManager.NETWORK_PROVIDER;
-        // Or, use GPS location data:
-        String locationProvider = LocationManager.GPS_PROVIDER;
+                public void onProviderEnabled(String provider) {
+                }
 
-        // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(locationProvider, 1000, 0, locationListener);
+                public void onProviderDisabled(String provider) {
+                }
+            };
 
-        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-        LatLng current_loc = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+            // Use Network location data (less battery usage, better in theory but wasn't working on emulator)
+            String locationProvider = LocationManager.NETWORK_PROVIDER;
+            // Or, use GPS location data:
+            // String locationProvider = LocationManager.GPS_PROVIDER;
 
-        /*
-        // Add a marker in the current location
-        map.addMarker(new MarkerOptions()
-                .position(current_loc)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                .title("You're here."));
-        */
+            // Register the listener with the Location Manager to receive location updates
+            locationManager.requestLocationUpdates(locationProvider, 1000, 0, locationListener);
 
-        // Center map (aka "move camera") to current location & zoom in
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 15));
+            Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+            LatLng current_loc = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+
+
+            // Add a marker to the current location
+            map.addMarker(new MarkerOptions()
+                    .position(current_loc)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                    .title("You are here."));
+
+
+            // Center map (aka "move camera") to current location & zoom in
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 13));
+
+        } catch (Error e) {
+            // If location error, assume location to be Boston.
+            LatLng boston = new LatLng(42.3601, -71.0589);
+            map.setMyLocationEnabled(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(boston, 13));
+
+            final Marker boston_marker = map.addMarker(new MarkerOptions()
+                    .title("Boston")
+                    .position(boston));
+        }
 
         GoogleMap.OnMapLongClickListener clickListener = new GoogleMap.OnMapLongClickListener() {
             @Override
@@ -82,6 +136,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
                 createPinPalEvent(map, clicked_point);
+
 
                 temp_marker.remove();
             }
@@ -119,6 +174,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     public static void placePin(MarkerOptions options){
         map.addMarker(options);
+        ParseObject pinTemp = new ParseObject("Pins");
+        pinTemp.put("Activity", activity_type);
+        pinTemp.put("startTime", "to get from input");
+        pinTemp.put("endTime", "to get from input");
+        pinTemp.put("date", "today");
+        pinTemp.saveInBackground();
     }
 
     public void showAddPinScreen(View v) {
