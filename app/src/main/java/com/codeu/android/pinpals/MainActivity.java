@@ -13,6 +13,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -54,27 +55,94 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(locationProvider, 1000, 0, locationListener);
 
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-
-        // Add a marker in last known location and move the camera.
         LatLng current_loc = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+
+        /*
+        // Add a marker in the current location
         map.addMarker(new MarkerOptions()
                 .position(current_loc)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                 .title("You're here."));
+        */
 
-        map.moveCamera(CameraUpdateFactory.newLatLng(current_loc));
-        map.moveCamera(CameraUpdateFactory.zoomTo(15));
+        // Center map (aka "move camera") to current location & zoom in
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 15));
 
         GoogleMap.OnMapLongClickListener clickListener = new GoogleMap.OnMapLongClickListener() {
             @Override
-            public void onMapLongClick(LatLng point) {
-                map.addMarker(new MarkerOptions()
-                        .position(point)
+            public void onMapLongClick(LatLng clicked_point) {
+                Marker temp_marker = map.addMarker(new MarkerOptions()
+                        .position(clicked_point)
                         .title("Clicked here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+
+                createPinPalEvent(map, clicked_point);
+
+                temp_marker.remove();
             }
         };
         map.setOnMapLongClickListener(clickListener);
+
+    }
+
+
+    /**
+     * Calls create activity (which adds PinPal event to database), then creates a new marker.
+     *
+     * @param map
+     * @param clicked_point
+     */
+    public void createPinPalEvent(GoogleMap map, LatLng clicked_point) {
+
+
+        /* activity types:
+         * 1 = entertainment
+         * 2 = fitness
+         * 3 = food
+         * 4 = social
+         * 5 = studying
+         * 0 = other
+         */
+        int activity_type = 1;
+        MarkerOptions options;
+        switch (activity_type) {
+            case 1:
+                options = new MarkerOptions()
+                        .position(clicked_point)
+                        .title("Clicked here")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                break;
+            case 2:
+                options = new MarkerOptions()
+                        .position(clicked_point)
+                        .title("Clicked here")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                break;
+            case 3:
+                options = new MarkerOptions()
+                        .position(clicked_point)
+                        .title("Clicked here")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                break;
+            case 4:
+                options = new MarkerOptions()
+                        .position(clicked_point)
+                        .title("Clicked here")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                break;
+            case 5:
+                options = new MarkerOptions()
+                        .position(clicked_point)
+                        .title("Clicked here")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                break;
+            default:
+                options = new MarkerOptions()
+                        .position(clicked_point)
+                        .title("Clicked here")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        } // end switch
+        map.addMarker(options);
 
     }
 
