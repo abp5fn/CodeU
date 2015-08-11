@@ -11,6 +11,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -25,7 +26,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(final GoogleMap map) {
 
         // Acquire a reference to the system Location Manager
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -55,12 +56,26 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
 
         // Add a marker in last known location and move the camera.
-        LatLng last = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-        map.addMarker(new MarkerOptions().position(last).title("Marker at last known location"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(last));
+        LatLng current_loc = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+        map.addMarker(new MarkerOptions()
+                .position(current_loc)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                .title("You're here."));
+
+        map.moveCamera(CameraUpdateFactory.newLatLng(current_loc));
+        map.moveCamera(CameraUpdateFactory.zoomTo(15));
+
+        GoogleMap.OnMapLongClickListener clickListener = new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng point) {
+                map.addMarker(new MarkerOptions()
+                        .position(point)
+                        .title("Clicked here")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            }
+        };
+        map.setOnMapLongClickListener(clickListener);
 
     }
-
-
 
 }
