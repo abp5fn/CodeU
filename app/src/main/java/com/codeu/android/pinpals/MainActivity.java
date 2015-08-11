@@ -120,18 +120,21 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
             final Marker boston_marker = map.addMarker(new MarkerOptions()
                     .title("Boston")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                     .position(boston));
         }
 
         GoogleMap.OnMapLongClickListener clickListener = new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng clicked_point) {
+
                 Marker temp_marker = map.addMarker(new MarkerOptions()
                         .position(clicked_point)
                         .title("Clicked here")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
                 createPinPalEvent(map, clicked_point);
+
 
 
                 temp_marker.remove();
@@ -152,7 +155,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         /* activity types:
-         * 1 = entertainment
+         * 1 = games
          * 2 = fitness
          * 3 = food
          * 4 = social
@@ -198,14 +201,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         .title("Clicked here")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
         } // end switch
-        map.addMarker(options);
 
         ParseObject pinTemp = new ParseObject("Pins");
-        pinTemp.put("Activity", activity_type);
+        pinTemp.put("Activity", 3);
         pinTemp.put("startTime", "to get from input");
         pinTemp.put("endTime", "to get from input");
         pinTemp.put("date", "today");
         pinTemp.saveInBackground();
+
+        map.addMarker(options);
+
+
 
     }
 
