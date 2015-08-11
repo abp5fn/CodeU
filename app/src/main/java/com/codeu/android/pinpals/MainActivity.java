@@ -26,6 +26,7 @@ import com.parse.ParseQuery;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
+    static GoogleMap map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         //how to go through query of pins and do stuff with them
         //in this case, doing stuff is putting them on the map --> creating new pins
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Pins");
-        query.whereEqualTo("date", "May 4, 2015");
+        //query.whereEqualTo("date", "May 4, 2015");
         //query.whereLessThan("endTime", currentTime??); doesn't pull down pins where the activity is over
         query.findInBackground(new FindCallback<ParseObject>() {
 
@@ -47,8 +48,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 for (int i = 0; i < list.size(); i++) {
 
                     if (e == null) {
-                        Log.d("Activity: ", list.get(i).getString("Activity"));
-                        //create a pin based on activity (helper method?
+
+                        LatLng temp = new LatLng(list.get(i).getInt("Latitude"), list.get(i).getLong("Longitude"));
+
+                                map.addMarker(new MarkerOptions()
+                                        .position(temp)
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                .title("This pin exists."));
 
                     } else {
                         Log.d("Activity", "Error: " + e.getMessage());
@@ -64,13 +70,39 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * Calls create activity (which adds PinPal event to database), then creates a new marker.
+     *
+     * @param map
+     * @param clicked_point
+     */
+    public void createPinPalEvent(GoogleMap map, LatLng clicked_point) {
+        Intent nextScreen = new Intent(getApplicationContext(), AddPinFragment.class);
+        startActivity(nextScreen);
+
+        /* activity types:
+         * 1 = entertainment
+         * 2 = fitness
+         * 3 = food
+         * 4 = social
+         * 5 = studying
+         * 0 = other
+         */
+
+        System.out.println(clicked_point.latitude + " + " + clicked_point.longitude);
+
+        AddPinFragment.setLocation(clicked_point);
+
+        //map.addMarker(options);
+    }
+
+
     @Override
     public void onMapReady(final GoogleMap map) {
 
         try {
-            // Attempt to get current location for the map.
-
             // Acquire a reference to the system Location Manager
+            this.map = map;
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
             // Define a listener that responds to location updates
@@ -91,9 +123,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             };
 
             // Use Network location data (less battery usage, better in theory but wasn't working on emulator)
-            String locationProvider = LocationManager.NETWORK_PROVIDER;
+            //String locationProvider = LocationManager.NETWORK_PROVIDER;
             // Or, use GPS location data:
-            // String locationProvider = LocationManager.GPS_PROVIDER;
+            String locationProvider = LocationManager.GPS_PROVIDER;
 
             // Register the listener with the Location Manager to receive location updates
             locationManager.requestLocationUpdates(locationProvider, 1000, 0, locationListener);
@@ -102,22 +134,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng current_loc = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
 
 
-            // Add a marker to the current location
+            // Add a marker in the current location
             map.addMarker(new MarkerOptions()
                     .position(current_loc)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                    .title("You are here."));
-
+                    .title("You're here."));
 
             // Center map (aka "move camera") to current location & zoom in
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 13));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 15));
 
         } catch (Error e) {
-            // If location error, assume location to be Boston.
-            LatLng boston = new LatLng(42.3601, -71.0589);
-            map.setMyLocationEnabled(true);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(boston, 13));
 
+            // If not getting current location, use Boston
             final Marker boston_marker = map.addMarker(new MarkerOptions()
                     .title("Boston")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
@@ -130,12 +158,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                 Marker temp_marker = map.addMarker(new MarkerOptions()
                         .position(clicked_point)
-                        .title("Clicked here")
+                        .title("Clicked\nhere")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
                 createPinPalEvent(map, clicked_point);
-
-
 
                 temp_marker.remove();
             }
@@ -143,7 +169,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         map.setOnMapLongClickListener(clickListener);
 
     }
-
 
     /**
      * Calls create activity (which adds PinPal event to database), then creates a new marker.
@@ -211,8 +236,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         map.addMarker(options);
 
-
-
+    public static void placePin(MarkerOptions options){
+        map.addMarker(options);
     }
 
     public void showAddPinScreen(View v) {

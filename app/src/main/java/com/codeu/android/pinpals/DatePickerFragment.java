@@ -1,14 +1,25 @@
 package com.codeu.android.pinpals;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
+import android.widget.EditText;
 
 import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+    EditText dateBtn;
+
+    public DatePickerFragment(){}
+
+    @SuppressLint("ValidFragment")
+    public DatePickerFragment(EditText btn){
+        dateBtn=btn;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -25,6 +36,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
         String dateString = month + "/" + day + "/" + year;
-        System.out.println("Date:" + dateString);
+        dateBtn.setText(dateString);
     }
 }
