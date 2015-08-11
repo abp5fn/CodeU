@@ -67,44 +67,61 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(final GoogleMap map) {
 
-        // Acquire a reference to the system Location Manager
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        try {
+            // Attempt to get current location for the map.
 
-        // Define a listener that responds to location updates
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-                //makeUseOfNewLocation(location);
-            }
+            // Acquire a reference to the system Location Manager
+            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            // Define a listener that responds to location updates
+            LocationListener locationListener = new LocationListener() {
+                public void onLocationChanged(Location location) {
+                    // Called when a new location is found by the network location provider.
+                    //makeUseOfNewLocation(location);
+                }
 
-            public void onProviderEnabled(String provider) {}
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
 
-            public void onProviderDisabled(String provider) {}
-        };
+                public void onProviderEnabled(String provider) {
+                }
 
-        // Use Network location data (less battery usage, better in theory but wasn't working on emulator)
-        //String locationProvider = LocationManager.NETWORK_PROVIDER;
-        // Or, use GPS location data:
-        String locationProvider = LocationManager.GPS_PROVIDER;
+                public void onProviderDisabled(String provider) {
+                }
+            };
 
-        // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(locationProvider, 1000, 0, locationListener);
+            // Use Network location data (less battery usage, better in theory but wasn't working on emulator)
+            String locationProvider = LocationManager.NETWORK_PROVIDER;
+            // Or, use GPS location data:
+            // String locationProvider = LocationManager.GPS_PROVIDER;
 
-        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-        LatLng current_loc = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+            // Register the listener with the Location Manager to receive location updates
+            locationManager.requestLocationUpdates(locationProvider, 1000, 0, locationListener);
 
-        /*
-        // Add a marker in the current location
-        map.addMarker(new MarkerOptions()
-                .position(current_loc)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                .title("You're here."));
-        */
+            Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+            LatLng current_loc = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
 
-        // Center map (aka "move camera") to current location & zoom in
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 15));
+
+            // Add a marker to the current location
+            map.addMarker(new MarkerOptions()
+                    .position(current_loc)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                    .title("You are here."));
+
+
+            // Center map (aka "move camera") to current location & zoom in
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 13));
+
+        } catch (Error e) {
+            // If location error, assume location to be Boston.
+            LatLng boston = new LatLng(42.3601, -71.0589);
+            map.setMyLocationEnabled(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(boston, 13));
+
+            final Marker boston_marker = map.addMarker(new MarkerOptions()
+                    .title("Boston")
+                    .position(boston));
+        }
 
         GoogleMap.OnMapLongClickListener clickListener = new GoogleMap.OnMapLongClickListener() {
             @Override
@@ -115,6 +132,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
                 createPinPalEvent(map, clicked_point);
+
 
                 temp_marker.remove();
             }
