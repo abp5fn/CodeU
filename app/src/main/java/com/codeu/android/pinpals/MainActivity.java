@@ -14,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -59,7 +60,30 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void done(List<ParseObject> list, ParseException e) {
 
+
                 for (int i = 0; i < list.size(); i++) {
+
+                    BitmapDescriptor bit = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN);
+                    //if statements for certain colors
+
+                    if (list.get(i).getInt("Index") == 1){
+                       bit = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+                    }
+                    else if (list.get(i).getInt("Index") == 2){
+                        bit = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN);
+                    }
+                    else if (list.get(i).getInt("Index") == 3){
+                        bit = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
+                    }
+                    else if (list.get(i).getInt("Index") == 4){
+                        bit = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET);
+                    }
+                    else if (list.get(i).getInt("Index") == 5){
+                        bit = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
+                    }
+                    else if (list.get(i).getInt("Index") == 6){
+                        bit = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
+                    }
 
                     if (e == null) {
 
@@ -71,7 +95,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                         map.addMarker(new MarkerOptions()
                                 .position(temp)
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                .icon(bit)
                                 .title(TitleString)
                                 .snippet(ContentString));
 
