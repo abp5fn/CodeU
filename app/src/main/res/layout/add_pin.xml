@@ -5,65 +5,6 @@
     android:orientation="vertical"
     android:background="#eeeeee">
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="80dp"
-        android:orientation="vertical">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5">
-                <RadioButton android:id="@+id/radio_entertainment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/entertainment"
-                    android:onClick="onRadioButtonClicked"
-                    android:layout_weight=".33" />
-                <RadioButton android:id="@+id/radio_fitness"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fitness"
-                    android:onClick="onRadioButtonClicked"
-                    android:layout_weight=".33" />
-                <RadioButton android:id="@+id/radio_food"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/food"
-                    android:onClick="onRadioButtonClicked"
-                    android:layout_weight=".33" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5">
-                <RadioButton android:id="@+id/radio_social"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/social"
-                    android:onClick="onRadioButtonClicked"
-                    android:layout_weight=".33" />
-                <RadioButton android:id="@+id/radio_studying"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/studying"
-                    android:onClick="onRadioButtonClicked"
-                    android:layout_weight=".33" />
-                <RadioButton android:id="@+id/radio_other"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/other"
-                    android:onClick="onRadioButtonClicked"
-                    android:layout_weight=".33" />
-            </LinearLayout>
-        </LinearLayout>
-
-    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"

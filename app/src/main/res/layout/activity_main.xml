@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:weightSum="1"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="@style/RtlOverlay.Widget.AppCompat.Toolbar.Button.Navigation">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/icon_topbar"
+            android:layout_weight=".1"
+            android:background="#fffbf500"
+            android:baselineAlignBottom="true" />
+    </LinearLayout>
 
     <fragment
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="467dp"
+        android:layout_height="match_parent"
         android:id="@+id/map"
         tools:context=".MainActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal"
-        android:onClick="showAddPinScreen"
-        />
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_weight=".9"/>
 
 </LinearLayout>

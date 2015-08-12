@@ -21,4 +21,6 @@
 
     <color name="white_bg">#ffffff</color>
 
+    <color name="gray_bg">#666666</color>
+
 </resources>

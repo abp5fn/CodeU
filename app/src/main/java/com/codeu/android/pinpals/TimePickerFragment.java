@@ -9,7 +9,9 @@ import android.text.format.DateFormat;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
@@ -41,7 +43,14 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
         timeString = hourOfDay + ":" + String.format("%02d", minute);
-        System.out.println("Time:" + timeString);
-        timeBtn.setText(timeString);
+        String endTime12 = "";
+        try {
+            String _24HourTime = timeString;
+            SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
+            SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
+            Date _24HourDt = _24HourSDF.parse(_24HourTime);
+            timeString=_12HourSDF.format(_24HourDt);
+            timeBtn.setText(timeString);
+        } catch (Exception e) {}
     }
 }
