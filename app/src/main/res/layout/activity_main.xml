@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="#f0faff"
         style="@style/RtlOverlay.Widget.AppCompat.Toolbar.Button.Navigation">
         <ImageView
             android:layout_width="match_parent"
@@ -18,7 +19,6 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/icon_topbar"
             android:layout_weight=".1"
-            android:background="#fffbf500"
             android:baselineAlignBottom="true" />
     </LinearLayout>
 
