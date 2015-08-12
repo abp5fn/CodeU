@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:weightSum="1"
     android:orientation="vertical"
-    android:background="#ffa6fffd">
+    android:background="#eeeeee">
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -77,7 +77,7 @@
             android:id="@+id/button_games"
             android:onClick="onActivityTypeClicked"
             android:background="@drawable/green_button"
-            android:textColor="@color/white_text"
+            android:textColor="@color/white_bg"
             android:layout_weight="0.3" />
 
         <Button
@@ -87,7 +87,7 @@
             android:id="@+id/button_fitness"
             android:onClick="onActivityTypeClicked"
             android:background="@drawable/cyan_button"
-            android:textColor="@color/white_text"
+            android:textColor="@color/white_bg"
             android:layout_weight="0.3" />
 
         <Button
@@ -97,7 +97,7 @@
             android:id="@+id/button_food"
             android:onClick="onActivityTypeClicked"
             android:background="@drawable/blue_button"
-            android:textColor="@color/white_text"
+            android:textColor="@color/white_bg"
             android:layout_weight="0.3" />
     </LinearLayout>
 
@@ -113,7 +113,7 @@
             android:id="@+id/button_social"
             android:onClick="onActivityTypeClicked"
             android:background="@drawable/violet_button"
-            android:textColor="@color/white_text"
+            android:textColor="@color/white_bg"
             android:layout_weight="0.3" />
 
         <Button
@@ -123,7 +123,7 @@
             android:id="@+id/button_studying"
             android:onClick="onActivityTypeClicked"
             android:background="@drawable/red_button"
-            android:textColor="@color/white_text"
+            android:textColor="@color/white_bg"
             android:layout_weight="0.3" />
 
         <Button
@@ -133,7 +133,7 @@
             android:id="@+id/button_other"
             android:onClick="onActivityTypeClicked"
             android:background="@drawable/orange_button"
-            android:textColor="@color/white_text"
+            android:textColor="@color/white_bg"
             android:layout_weight="0.3" />
     </LinearLayout>
 

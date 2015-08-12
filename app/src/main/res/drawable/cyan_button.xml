@@ -9,8 +9,8 @@
                 android:endColor="@color/cyan2"
                 android:angle="270" />
             <stroke
-                android:width="0dp"
-                android:color="@color/white_text" />
+                android:width="3dp"
+                android:color="@color/cyan2" />
             <corners
                 android:radius="0dp" />
             <padding
@@ -28,8 +28,8 @@
                 android:startColor="@color/cyan2"
                 android:angle="270" />
             <stroke
-                android:width="0dp"
-                android:color="@color/white_text" />
+                android:width="3dp"
+                android:color="@color/cyan2" />
             <corners
                 android:radius="0dp" />
             <padding
@@ -43,12 +43,12 @@
     <item>
         <shape>
             <gradient
-                android:endColor="@color/cyan1"
-                android:startColor="@color/cyan1"
+                android:endColor="@color/cyan2"
+                android:startColor="@color/cyan2"
                 android:angle="270" />
             <stroke
-                android:width="0dp"
-                android:color="@color/white_text" />
+                android:width="3dp"
+                android:color="@color/cyan2" />
             <corners
                 android:radius="0dp" />
             <padding

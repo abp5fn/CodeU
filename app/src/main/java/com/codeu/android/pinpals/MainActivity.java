@@ -143,17 +143,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (lastKnownLocation == null) {
             // If location error, assume location to be Boston.
-            LatLng boston = new LatLng(42.3601, -71.0589);
+            LatLng sanjose = new LatLng(37.3382, -121.8863);
             map.setMyLocationEnabled(true);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(boston, 13));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(sanjose, 13));
         } else {
             // Add a marker in the current location
             LatLng current_loc = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-            map.addMarker(new MarkerOptions()
-                    .position(current_loc)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                    .title("You're here."));
-
             // Center map (aka "move camera") to current location & zoom in
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(current_loc, 13));
         }

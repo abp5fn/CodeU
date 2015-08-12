@@ -1,6 +1,5 @@
 package com.codeu.android.pinpals;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -125,8 +124,25 @@ public class AddPinFragment extends FragmentActivity {
         int[] type_buttons = { R.id.button_other, R.id.button_games, R.id.button_fitness,
                 R.id.button_food, R.id.button_social, R.id.button_studying };
 
-        String[] default_colors = { "#ffaa33", "#00ee99", "#33eeff", "#3366ff", "#7733ee", "#dd0033" };
-        String[] selected_colors = { "#ff9933", "#00dd99", "#33ccff", "#3333ff", "#6600dd", "#bb0033" };
+        int[] unclicked_buttons = {
+                R.drawable.orange_button,
+                R.drawable.green_button,
+                R.drawable.cyan_button,
+                R.drawable.blue_button,
+                R.drawable.violet_button,
+                R.drawable.red_button
+
+        };
+
+        int[] clicked_buttons = {
+                R.drawable.orange_button_clicked,
+                R.drawable.green_button_clicked,
+                R.drawable.cyan_button_clicked,
+                R.drawable.blue_button_clicked,
+                R.drawable.violet_button_clicked,
+                R.drawable.red_button_clicked
+
+        };
 
         // i keeps track of which button is pressed, is passed back to main_activity
         int i = 0;
@@ -134,12 +150,12 @@ public class AddPinFragment extends FragmentActivity {
 
             if (v.getId() == type_buttons[i]) {
                 // this is the button that was clicked
-                v.setBackgroundColor(Color.parseColor(selected_colors[i]));
+                v.setBackgroundResource(clicked_buttons[i]);
 
             } else {
                 // these are the buttons that weren't clicked.
                 Button temp_button = (Button) findViewById(type_buttons[i]);
-                temp_button.setBackgroundColor(Color.parseColor(default_colors[i]));
+                temp_button.setBackgroundColor(unclicked_buttons[i]);
             }
         }
 
