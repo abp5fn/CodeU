@@ -76,21 +76,27 @@ public class AddPinFragment extends FragmentActivity {
             case 1:
                 options = new MarkerOptions()
                         .position(clicked_point)
-                        .title(editTextEventName.getText().toString())
+                        .title(editTextEventName.getText().toString() + ": " +
+                                editTextStartTime.getText().toString() + " - " +
+                                editTextEndTime.getText().toString())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                         .snippet(editTextDescription.getText().toString());
                 break;
             case 2:
                 options = new MarkerOptions()
                         .position(clicked_point)
-                        .title(editTextEventName.getText().toString())
+                        .title(editTextEventName.getText().toString() + ": " +
+                                editTextStartTime.getText().toString() + " - " +
+                                editTextEndTime.getText().toString())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
                         .snippet(editTextDescription.getText().toString());
                 break;
             case 3:
                 options = new MarkerOptions()
                         .position(clicked_point)
-                        .title(editTextEventName.getText().toString())
+                        .title(editTextEventName.getText().toString() + ": " +
+                                editTextStartTime.getText().toString() + " - " +
+                                editTextEndTime.getText().toString())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
                         .snippet(editTextDescription.getText().toString());
 
@@ -98,21 +104,27 @@ public class AddPinFragment extends FragmentActivity {
             case 4:
                 options = new MarkerOptions()
                         .position(clicked_point)
-                        .title(editTextEventName.getText().toString())
+                        .title(editTextEventName.getText().toString() + ": " +
+                                editTextStartTime.getText().toString() + " - " +
+                                editTextEndTime.getText().toString())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
                         .snippet(editTextDescription.getText().toString());
                 break;
             case 5:
                 options = new MarkerOptions()
                         .position(clicked_point)
-                        .title("Clicked here")
+                        .title(editTextEventName.getText().toString() + ": " +
+                                editTextStartTime.getText().toString() + " - " +
+                                editTextEndTime.getText().toString())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                         .snippet(editTextDescription.getText().toString());
                 break;
             default:
                 options = new MarkerOptions()
                         .position(clicked_point)
-                        .title("Clicked here")
+                        .title(editTextEventName.getText().toString() + ": " +
+                                editTextStartTime.getText().toString() + " - " +
+                                editTextEndTime.getText().toString())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                         .snippet(editTextDescription.getText().toString());
         } // end switch

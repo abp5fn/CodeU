@@ -24,6 +24,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.List;
+import java.util.Date;
+import java.util.Calendar;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
     static GoogleMap map;
@@ -40,9 +42,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
+      //  String currentTime = DateFormat.getDateTimeInstance().format(new Date());
+
+        Calendar c = Calendar.getInstance();
+
+
+
+       // System.out.println(currentTime);
+
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Pins");
         //query.whereEqualTo("date", "May 4, 2015");
-        //query.whereLessThan("endTime", currentTime??); doesn't pull down pins where the activity is over
+       // query.whereEqualTo("Date", toString(c.get(Calendar.DATE)));
         query.findInBackground(new FindCallback<ParseObject>() {
 
             @Override
@@ -54,20 +65,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                         LatLng temp = new LatLng(list.get(i).getDouble("Latitude"), list.get(i).getDouble("Longitude"));
 
-                        String ContentString =list.get(i).getString("Description") +
-                                ".\n" + list.get(i).getString("Start_Time") + " - " + list.get(i).getString("End_Time");
+                        String ContentString = list.get(i).getString("Description");
+                        String TitleString = list.get(i).getString("Activity") + ": " +
+                                list.get(i).getString("Start_Time") + " - " + list.get(i).getString("End_Time");
 
                         map.addMarker(new MarkerOptions()
                                 .position(temp)
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                                .title(list.get(i).getString("Activity")))
-                                .setSnippet(ContentString);
+                                .title(TitleString)
+                                .snippet(ContentString));
 
 
-
-                       // Google.maps.event.addListener(marker, 'click', function() {
-                       //     infowindow.open(map,marker);
-                       // });
+                        // Google.maps.event.addListener(marker, 'click', function() {
+                        //     infowindow.open(map,marker);
+                        // });
 
 
 
