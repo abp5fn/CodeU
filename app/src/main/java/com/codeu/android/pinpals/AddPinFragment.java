@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -17,7 +18,7 @@ import java.util.Date;
 
 public class AddPinFragment extends FragmentActivity {
     static LatLng clicked_point;
-    int activity_type = 1;
+    int activity_type = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,14 +80,13 @@ public class AddPinFragment extends FragmentActivity {
         parseObject.put("Start_Time", startTime12);
         parseObject.put("End_Time", endTime12);
         parseObject.put("Date", editTextDate.getText().toString());
+        parseObject.put("Index", activity_type);
 
         parseObject.put("Longitude", clicked_point.longitude );
         parseObject.put("Latitude", clicked_point.latitude);
 
         parseObject.put("Description", editTextDescription.getText().toString());
-        parseObject.put("Type", activity_type);
         parseObject.saveInBackground();
-
 
         MarkerOptions options;
         switch (activity_type) {
@@ -190,6 +190,7 @@ public class AddPinFragment extends FragmentActivity {
             if (v.getId() == type_buttons[i]) {
                 // this is the button that was clicked
                 v.setBackgroundResource(clicked_buttons[i]);
+                activity_type=i;
             } else {
                 // these are the buttons that weren't clicked.
                 Button temp_button = (Button) findViewById(type_buttons[i]);
