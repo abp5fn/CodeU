@@ -155,12 +155,11 @@ public class AddPinFragment extends FragmentActivity {
         finish();
     }
 
-    public String onActivityTypeClicked(View v) {
+    public int onActivityTypeClicked(View v) {
         boolean pressed = ((Button) v).isPressed();
 
         int[] type_buttons = { R.id.button_other, R.id.button_games, R.id.button_fitness,
                 R.id.button_food, R.id.button_social, R.id.button_studying };
-        String[] button_names = { "Other", "Games", "Fitness", "Food", "Social", "Studying" };
 
         /*
         int[] unclicked_buttons = {
@@ -184,15 +183,13 @@ public class AddPinFragment extends FragmentActivity {
 
         // i keeps track of which button is pressed, is passed back to main_activity
         int i = 0;
-        String returned = "";
         System.out.println("The v.id is: " + v.getId());
 
         for (; i < type_buttons.length; i++) {
-            System.out.println("The type_button is: " + i + " " +type_buttons[i]);
+            //System.out.println("The type_button is: " + i + " " + type_buttons[i]);
             if (v.getId() == type_buttons[i]) {
                 // this is the button that was clicked
                 v.setBackgroundResource(clicked_buttons[i]);
-                returned = button_names[i];
             } else {
                 // these are the buttons that weren't clicked.
                 Button temp_button = (Button) findViewById(type_buttons[i]);
@@ -200,7 +197,7 @@ public class AddPinFragment extends FragmentActivity {
             }
         }
 
-        return returned;
+        return i;
     }
 
     public static void setLocation(LatLng cp){
